@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h3 class="page-title">
+    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-animation-play"></i>
+    </span>
+    คิวทั้งหมด
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript://" routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">คิวทั้งหมด</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">แสดงรายการคิวของทุกช่องบริการ</h3>
+    <div class="table-responsive">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>จุดให้บริการ</th>
+            <th>ช่องบริการ</th>
+            <th>คิวปัจจุบัน</th>
+            <th>รอเรียก</th>
+            <th>HN, ชื่อ - สกุล</th>
+            <th>อัปเดท</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td>
+              <span class="font-weight-bold">{{item.service_point_name}}</span>
+            </td>
+            <td>
+              <span>{{ item.room_number }}</span>
+            </td>
+            <td>
+              <span class="font-weight-bold text-primary" style="letter-spacing: 3px;">{{item.queue_number}}</span>
+            </td>
+            <td>
+              <span class="font-weight-bold text-danger" style="letter-spacing: 3px;">{{item.total | number}}</span>
+            </td>
+            <td>
+              <span class="font-weight-bold">HN: {{item.hn}} - {{item.title}}{{item.first_name}}
+                {{item.last_name}}</span>
+            </td>
+
+            <td>
+              <span>{{item.update_date | shortTime}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

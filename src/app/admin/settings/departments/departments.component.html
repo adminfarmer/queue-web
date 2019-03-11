@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h3 class="page-title">
+    ข้อมูลแผนก
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript://" routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">แผนก</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="openRegister()" class="float-right btn-lg btn btn-sm btn-gradient-success"> <i class="mdi mdi-plus"></i>
+              เพิ่มแผนก
+            </button>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ชื่อแผนก</th>
+              <th style="width: 150px;">#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{ item.department_name }}</td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-icon-append btn-gradient-success" (click)="openEdit(item)">
+                    <i class="mdi mdi-pencil"></i> แก้ไข
+                  </button>
+                  <button class="btn btn-sm btn-gradient-danger" (click)="remove(item)">
+                    <i class="mdi mdi-delete-outline"></i> ลบ
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-add-department [info]="info" #mdlDepartment (onSave)="onSave($event)"></app-modal-add-department>
