@@ -62,7 +62,6 @@ export class QueueCenterPatientComponent implements OnInit {
   @ViewChild(CountdownComponent) counter: CountdownComponent;
 
   constructor(
-    @Inject('API_NOTIFYURL') private apiNotifyUrl: string,
     private queueService: QueueService,
     private alertService: AlertService,
     private zone: NgZone,

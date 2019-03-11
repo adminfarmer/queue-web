@@ -76,7 +76,6 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private zone: NgZone,
     private router: Router,
-    @Inject('API_NOTIFYURL') private apiNotifyUrl: string,
 
     private route: ActivatedRoute
   ) {

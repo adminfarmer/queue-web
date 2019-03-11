@@ -79,7 +79,6 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private zone: NgZone,
     @Inject('API_URL') private apiUrl: string,
-    @Inject('API_NOTIFYURL') private apiNotifyUrl: string,
   ) {
     const token = sessionStorage.getItem('token');
     const decodedToken = this.jwtHelper.decodeToken(token);
@@ -89,7 +88,6 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     this.departmentTopic = decodedToken.DEPARTMENT_TOPIC || 'queue/department';
 
 
-    // this.notifyUrl = this.apiNotifyUrl;
     this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
 
     this.notifyUser = decodedToken.NOTIFY_USER;

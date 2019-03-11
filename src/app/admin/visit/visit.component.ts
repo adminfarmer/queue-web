@@ -61,13 +61,11 @@ export class VisitComponent implements OnInit {
     private servicePointService: ServicePointService,
     private zone: NgZone,
     @Inject('API_URL') private apiUrl: string,
-    @Inject('API_NOTIFYURL') private apiNotifyUrl: string,
 
   ) {
     const token = sessionStorage.getItem('token');
     const decodedToken = this.jwtHelper.decodeToken(token);
 
-    // this.notifyUrl = this.apiNotifyUrl;
     this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
     this.notifyUser = decodedToken.NOTIFY_USER;
     this.notifyPassword = decodedToken.NOTIFY_PASSWORD;
