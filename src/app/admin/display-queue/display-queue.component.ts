@@ -95,7 +95,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
       const token = this.token || sessionStorage.getItem('token');
       if (token) {
         var decodedToken = this.jwtHelper.decodeToken(token);
-        console.log(decodedToken);
+        // console.log(decodedToken);
         this.servicePointSpeak = decodedToken.SPEAK_SERVICE_POINT || 'Y';
         this.servicePointTopic = decodedToken.SERVICE_POINT_TOPIC;
         this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
@@ -149,14 +149,13 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         const queueNumber = this.playlists[0].queueNumber;
         const roomNumber = this.playlists[0].roomNumber;
         this.playSound(queueNumber, roomNumber);
-        // this.isPlayingSound = false;
       }
     }
   }
 
   //Ubonket10 
   numberOnly(text) {
-    console.log(text);
+    // console.log(text);
     let value = '';
     for (let index = 0; index < text.length; index++) {
       if (text[index] >= 0 || text[index] <= 9) {
@@ -167,7 +166,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   }
 
   playSound(strQueue: string, strRoomNumber: string) {
-    console.log(this.servicePointSpeak);
+    // console.log(this.servicePointSpeak);
     this.isPlayingSound = true;
 
     var _queue = strQueue.replace(' ', '');
@@ -181,7 +180,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     const _strQueue = _queue.split('');
     const _strRoom = strRoomNumber.split('');
 
-    console.log(_strQueue);
+    // console.log(_strQueue);
 
     const audioFiles = [];
 
