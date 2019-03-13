@@ -415,8 +415,6 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   }
 
   setQueueForCall(item: any) {
-    console.log(item);
-
     this.queueId = item.queue_id;
     this.queueNumber = item.queue_number;
   }
