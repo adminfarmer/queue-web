@@ -122,6 +122,14 @@ export class DisplayQueueGroupComponent implements OnInit, OnDestroy {
       console.log(error);
     }
   }
+  onFinished() {
+    console.log('Time finished!');
+    this.connectWebSocket();
+  }
+
+  onNotify($event) {
+    console.log('Finished');
+  }
 
   toggleSound() {
     this.isSound = !this.isSound;

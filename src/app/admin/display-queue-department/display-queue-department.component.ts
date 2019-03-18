@@ -137,6 +137,14 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
     }
   }
 
+  onNotify($event) {
+    console.log('Finished');
+  }
+
+  selectDepartment() {
+    this.mdlServicePoint.open();
+  }
+
   toggleSound() {
     this.isSound = !this.isSound;
   }
@@ -325,9 +333,9 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  selectDepartment() {
-    this.mdlServicePoint.open();
+  onFinished() {
+    console.log('Time finished!');
+    this.connectWebSocket();
   }
 
   onSelectDepartment(event: any) {

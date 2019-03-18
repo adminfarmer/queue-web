@@ -68,14 +68,13 @@
               เกิดข้อผิดพลาดในการเชื่อมต่อกับ Notify Server.
             </p>
             <button class="btn btn-danger" (click)="connectWebSocket()">เชื่อมต่อใหม่ (<strong>
-                <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()"
-                  (notify)="onNotify($event)"></countdown>
+                <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()" (notify)="onNotify($event)"></countdown>
               </strong>)</button>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <table class="table table-sm">
               <thead>
                 <tr>
@@ -92,11 +91,9 @@
                 <tr *ngIf="!workingItems.length">
                   <td colspan="3">กรุณาเลือกจุดบริการ</td>
                 </tr>
-                <tr *ngFor="let item of workingItems"
-                  [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber,'backgroud-queue-white':item.queue_number!==currentQueueNumber}">
+                <tr *ngFor="let item of workingItems" [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber,'backgroud-queue-white':item.queue_number!==currentQueueNumber}">
                   <td style="border-radius: 10px 0px 0px 10px">
-                    <label style="font-size: 3.5rem; letter-spacing: 2px;"
-                      class="font-weight-bold">{{item.queue_number}}</label>
+                    <label style="font-size: 3.5rem; letter-spacing: 2px;" class="font-weight-bold">{{item.queue_number}}</label>
                   </td>
                   <td style="border-radius: 0px 10px 10px 0px">
                     <label style="font-size: 3.5rem;" class="font-weight-bold">{{item.room_number}}</label>
@@ -105,7 +102,7 @@
               </tbody>
             </table>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-8">
             <div class="card bg-primary card-img-holder text-white">
               <div class="card-body">
                 <table class="table table-sm text-white">
@@ -122,12 +119,12 @@
                   <tbody>
                     <tr>
                       <td>
-                        <span class="font-weight-bold float-left"
-                          style="letter-spacing: 10px; font-size: 8rem;">{{currentQueueNumber  || '-'}}</span>
+                        <span class="font-weight-bold float-left" style="letter-spacing: 10px; font-size: 8rem;">{{currentQueueNumber
+                          || '-'}}</span>
                       </td>
                       <td>
-                        <span class="font-weight-bold float-right"
-                          style="letter-spacing: 5px; font-size: 8rem;">{{currentRoomNumber  || '-'}}</span>
+                        <span class="font-weight-bold float-right" style="letter-spacing: 5px; font-size: 8rem;">{{currentRoomNumber
+                          || '-'}}</span>
                         <!-- <div style="font-size: 3rem;" class="card-text">{{currentRoomName || '-'}}</div> -->
                       </td>
                     </tr>
@@ -138,10 +135,8 @@
 
               <div class="card-footer">
                 <div class="float-left">
-                  <i style="cursor: pointer;" *ngIf="isSound" (click)="toggleSound()"
-                    class="h2 text-warning float-right mdi mdi-bell-ring"></i>
-                  <i style="cursor: pointer;" *ngIf="!isSound" (click)="toggleSound()"
-                    class="h2 text-muted float-right mdi mdi-bell-off"></i>
+                  <i style="cursor: pointer;" *ngIf="isSound" (click)="toggleSound()" class="h2 text-warning float-right mdi mdi-bell-ring"></i>
+                  <i style="cursor: pointer;" *ngIf="!isSound" (click)="toggleSound()" class="h2 text-muted float-right mdi mdi-bell-off"></i>
                 </div>
                 <div class="float-right">
                   <span class="h2 text-white font-weight-bold" style="cursor: pointer" (click)="selectDepartment()">{{departmentName
