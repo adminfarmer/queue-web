@@ -13,21 +13,21 @@
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link" href="javascript://" routerLink="/admin">
-            <i class="mdi mdi-home text-success"></i>
+            <i class="mdi mdi-home text-success"></i>[Home]
           </a>
         </li>
         <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link" appToggleFullscreen (click)="hide = true" href="javascript://">
-            <i class="mdi mdi-fullscreen text-primary"></i>
+            <i class="mdi mdi-fullscreen text-primary"></i>[Full Screen]
           </a>
         </li>
         <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link" (click)="logout()" href="javascript://">
-            <i class="mdi mdi-power text-danger"></i>
+            <i class="mdi mdi-power text-danger"></i>[Exit]
           </a>
         </li>
-
       </ul>
+
     </div>
   </nav>
   <!-- partial -->
@@ -35,15 +35,9 @@
     <div class="main-panel">
       <div class="content-wrapper" style="padding: 1rem 2.25rem">
         <div [ngClass]="{'hide': !hide}" style="text-align: right;font-size: 1rem">
-          <a href="javascript://" routerLink="/admin">
-            <i class="mdi mdi-home text-success"></i>
-          </a>
-          <a appToggleFullscreen (click)="hide = false" href="javascript://">
-            <i class="mdi mdi-fullscreen text-primary"></i>
-          </a>
-          <a (click)="logout()" href="javascript://">
-            <i class="mdi mdi-power text-danger"></i>
-          </a>
+          <a href="javascript://" routerLink="/admin"><i class="mdi mdi-home text-success"></i></a>
+          <a appToggleFullscreen (click)="hide = false" href="javascript://"><i class="mdi mdi-fullscreen text-primary"></i></a>
+          <a (click)="logout()" href="javascript://"><i class="mdi mdi-power text-danger"></i></a>
         </div>
         <div class="card card-inverse-danger" *ngIf="isOffline">
           <div class="card-body">
@@ -51,8 +45,8 @@
               เกิดข้อผิดพลาดในการเชื่อมต่อกับ Notify Server.
             </p>
             <button class="btn btn-danger" (click)="connectWebSocket()">เชื่อมต่อใหม่ (<strong>
-              <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()" (notify)="onNotify($event)"></countdown>
-            </strong>)</button>
+                <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()" (notify)="onNotify($event)"></countdown>
+              </strong>)</button>
           </div>
         </div>
 
@@ -74,12 +68,10 @@
                     </tr>
                     <tr *ngFor="let item of workingItemsHistory">
                       <td>
-                        <label style="font-size: 6rem; letter-spacing: 2px;"
-                          class="font-weight-bold">{{item.queue_number}}</label>
+                        <label style="font-size: 6rem; letter-spacing: 2px;" class="font-weight-bold">{{item.queue_number}}</label>
                       </td>
                       <td style="text-align: right;">
-                        <label style="font-size: 6rem; color: yellow;"
-                          class="font-weight-bold">{{item.room_number}}</label>
+                        <label style="font-size: 6rem; color: yellow;" class="font-weight-bold">{{item.room_number}}</label>
                       </td>
                       <!-- <td>
                           <label style="font-size: 2.5rem;" class="font-weight-bold">{{item.hn}}</label>
@@ -109,8 +101,7 @@
                         || '-'}}</span>
                     </div>
                     <div class="col-md-3" style="text-align: right;">
-                      <span class="font-weight-bold"
-                        style="letter-spacing: 5px; font-size: 10rem; line-height: 150px; color:yellow">{{item.room_number
+                      <span class="font-weight-bold" style="letter-spacing: 5px; font-size: 10rem; line-height: 150px; color:yellow">{{item.room_number
                         || '-'}}</span>
                     </div>
                   </div>
@@ -119,10 +110,8 @@
               </div>
               <div class="card-footer">
                 <div class="float-left">
-                  <i style="cursor: pointer;" *ngIf="isSound" (click)="toggleSound()"
-                    class="h2 text-warning float-right mdi mdi-bell-ring"></i>
-                  <i style="cursor: pointer;" *ngIf="!isSound" (click)="toggleSound()"
-                    class="h2 text-muted float-right mdi mdi-bell-off"></i>
+                  <i style="cursor: pointer;" *ngIf="isSound" (click)="toggleSound()" class="h2 text-warning float-right mdi mdi-bell-ring"></i>
+                  <i style="cursor: pointer;" *ngIf="!isSound" (click)="toggleSound()" class="h2 text-muted float-right mdi mdi-bell-off"></i>
                 </div>
                 <div class="float-right">
                   <span class="h2 text-white font-weight-bold" style="cursor: pointer" (click)="selectServicePoint()">{{servicePointName

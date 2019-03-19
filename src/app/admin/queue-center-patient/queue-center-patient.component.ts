@@ -56,8 +56,9 @@ export class QueueCenterPatientComponent implements OnInit {
   notifyUser = null;
   notifyPassword = null;
   notifyUrl: string;
-
   token: any;
+
+  hide = false;
 
   @ViewChild(CountdownComponent) counter: CountdownComponent;
 
@@ -94,6 +95,15 @@ export class QueueCenterPatientComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  onFinished() {
+    console.log('Time finished!');
+    this.connectWebSocket();
+  }
+
+  onNotify($event) {
+    console.log('Finished');
   }
 
   logout() {

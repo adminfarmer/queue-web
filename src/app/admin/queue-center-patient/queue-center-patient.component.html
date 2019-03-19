@@ -1,6 +1,6 @@
 <div class="container-scroller">
   <!-- partial:../../partials/_navbar.html -->
-  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0" [ngClass]="{'hide': hide}">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
       <a class="navbar-brand brand-logo" href="javascript://">
         <img style="width: 40px; height: 40px;" src="./assets/images/iconQ4U100.png" alt=""></a>
@@ -17,7 +17,7 @@
           </a>
         </li>
         <li class="nav-item d-none d-lg-block full-screen-link">
-          <a class="nav-link" appToggleFullscreen href="javascript://">
+          <a class="nav-link" appToggleFullscreen (click)="hide = true" href="javascript://">
             <i class="mdi mdi-fullscreen text-primary"></i>[Full Screen]
           </a>
         </li>
@@ -27,24 +27,18 @@
           </a>
         </li>
       </ul>
+
     </div>
   </nav>
   <!-- partial -->
   <div class="container-fluid page-body-wrapper">
-    <!-- partial:../../partials/_sidebar.html -->
-    <!-- <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <div style="text-align: center; margin-top: 50px;">
-        <span class="h1 font-weight-bold text-primary">วันที่ {{ currentDate }} </span>
-        <p></p>
-        <span class="h1 text-success font-weight-bold" style="letter-spacing: 5px;">{{ currentTime | shortTime }}
-        </span>
-        <p></p>
-        <span class="h2">last updated: {{lastupdateTime | shortTime}}</span>
-      </div>
-    </nav> -->
-    <!-- partial -->
     <div class="main-panel">
-      <div class="content-wrapper">
+      <div class="content-wrapper" style="padding: 1rem 2.25rem">
+        <div [ngClass]="{'hide': !hide}" style="text-align: right;font-size: 1rem">
+          <a href="javascript://" routerLink="/admin"><i class="mdi mdi-home text-success"></i></a>
+          <a appToggleFullscreen (click)="hide = false" href="javascript://"><i class="mdi mdi-fullscreen text-primary"></i></a>
+          <a (click)="logout()" href="javascript://"><i class="mdi mdi-power text-danger"></i></a>
+        </div>
 
         <div class="card card-inverse-danger" *ngIf="isOffline">
           <div class="card-body">

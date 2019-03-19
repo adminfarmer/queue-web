@@ -68,6 +68,7 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
   playlists: any = [];
   notifyUrl: string;
   token: any;
+  hide = false;
 
   constructor(
     private queueService: QueueService,

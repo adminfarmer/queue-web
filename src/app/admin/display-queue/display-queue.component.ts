@@ -70,6 +70,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   playlists: any = [];
   notifyUrl: string;
   token: string;
+  hide = false;
 
   constructor(
     private queueService: QueueService,

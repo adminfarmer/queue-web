@@ -1,6 +1,6 @@
 <div class="container-scroller">
   <!-- partial:../../partials/_navbar.html -->
-  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0" [ngClass]="{'hide': hide}">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
       <a class="navbar-brand brand-logo" href="javascript://">
         <img style="width: 40px; height: 40px;" src="./assets/images/iconQ4U100.png" alt=""></a>
@@ -13,54 +13,32 @@
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link" href="javascript://" routerLink="/admin">
-            <i class="mdi mdi-home text-success"></i>
+            <i class="mdi mdi-home text-success"></i>[Home]
           </a>
         </li>
         <li class="nav-item d-none d-lg-block full-screen-link">
-          <a class="nav-link" appToggleFullscreen href="javascript://">
-            <i class="mdi mdi-fullscreen text-primary"></i>
+          <a class="nav-link" appToggleFullscreen (click)="hide = true" href="javascript://">
+            <i class="mdi mdi-fullscreen text-primary"></i>[Full Screen]
           </a>
         </li>
         <li class="nav-item d-none d-lg-block full-screen-link">
           <a class="nav-link" (click)="logout()" href="javascript://">
-            <i class="mdi mdi-power text-danger"></i>
+            <i class="mdi mdi-power text-danger"></i>[Exit]
           </a>
         </li>
-
       </ul>
+
     </div>
   </nav>
   <!-- partial -->
   <div class="container-fluid page-body-wrapper">
-    <!-- partial:../../partials/_sidebar.html -->
-    <!-- <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <div class="mr-2 ml-2">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th><span class="h1">คิว</span></th>
-              <th><span class="h1">ช่อง</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngIf="!workingItems.length">
-              <td colspan="2">กรุณาเลือกจุดบริการ</td>
-            </tr>
-            <tr *ngFor="let item of workingItems">
-              <td style="text-align: center;">
-                <label style="font-size: 3.5rem; letter-spacing: 5px;" class="font-weight-bold">{{item.queue_number}}</label>
-              </td>
-              <td style="text-align: center;">
-                <label style="font-size: 3.5rem;" class="font-weight-bold">{{item.room_number}}</label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </nav> -->
-    <!-- partial -->
     <div class="main-panel">
-      <div class="content-wrapper">
+      <div class="content-wrapper" style="padding: 1rem 2.25rem">
+        <div [ngClass]="{'hide': !hide}" style="text-align: right;font-size: 1rem">
+          <a href="javascript://" routerLink="/admin"><i class="mdi mdi-home text-success"></i></a>
+          <a appToggleFullscreen (click)="hide = false" href="javascript://"><i class="mdi mdi-fullscreen text-primary"></i></a>
+          <a (click)="logout()" href="javascript://"><i class="mdi mdi-power text-danger"></i></a>
+        </div>
 
         <div class="card card-inverse-danger" *ngIf="isOffline">
           <div class="card-body">
