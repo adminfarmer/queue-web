@@ -178,10 +178,10 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     // console.log(this.servicePointSpeak);
     this.isPlayingSound = true;
 
-    var _queue = strQueue.replace(' ', '');
+    let _queue = strQueue.toString().replace(' ', '');
 
     if (this.servicePointSpeak == 'Y') {
-      _queue = _queue.replace('-', '');
+      _queue = _queue.toString().replace('-', '');
     } else {
       _queue = this.numberOnly(_queue);
     }

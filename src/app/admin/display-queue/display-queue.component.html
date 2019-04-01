@@ -36,7 +36,8 @@
       <div class="content-wrapper" style="padding: 1rem 2.25rem">
         <div [ngClass]="{'hide': !hide}" style="text-align: right;font-size: 1rem">
           <a href="javascript://" routerLink="/admin"><i class="mdi mdi-home text-success"></i></a>
-          <a appToggleFullscreen (click)="hide = false" href="javascript://"><i class="mdi mdi-fullscreen text-primary"></i></a>
+          <a appToggleFullscreen (click)="hide = false" href="javascript://"><i
+              class="mdi mdi-fullscreen text-primary"></i></a>
           <a (click)="logout()" href="javascript://"><i class="mdi mdi-power text-danger"></i></a>
         </div>
 
@@ -46,7 +47,8 @@
               เกิดข้อผิดพลาดในการเชื่อมต่อกับ Notify Server.
             </p>
             <button class="btn btn-danger" (click)="connectWebSocket()">เชื่อมต่อใหม่ (<strong>
-                <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()" (notify)="onNotify($event)"></countdown>
+                <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()"
+                  (notify)="onNotify($event)"></countdown>
               </strong>)</button>
           </div>
         </div>
@@ -61,8 +63,9 @@
                 <table class="table table-sm table-striped">
                   <thead>
                     <tr>
-                      <th><span class="h1">ลำดับที่</span></th>
-                      <th style="text-align: right;"><span class="h1">ช่องบริการ</span></th>
+                      <th><span class="font-weight-bold" style="font-size: 4rem;">ลำดับที่</span></th>
+                      <th style="text-align: right;"><span class="font-weight-bold"
+                          style="font-size: 4rem;">ช่องบริการ</span></th>
                       <!-- <th><span class="h1">HN</span></th> -->
                     </tr>
                   </thead>
@@ -70,12 +73,15 @@
                     <tr *ngIf="!workingItems.length">
                       <td colspan="3">กรุณาเลือกจุดบริการ</td>
                     </tr>
-                    <tr *ngFor="let item of workingItems" [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber}">
+                    <tr *ngFor="let item of workingItems"
+                      [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber}">
                       <td>
-                        <label style="font-size: 5rem; letter-spacing: 2px;" class="font-weight-bold">{{item.queue_number}}</label>
+                        <label style="font-size: 7rem; letter-spacing: 2px;"
+                          class="font-weight-bold">{{item.queue_number}}</label>
                       </td>
                       <td style="text-align: right;">
-                        <label style="font-size: 5rem; letter-spacing: 2px;" class="font-weight-bold">{{item.room_number}}</label>
+                        <label style="font-size: 7rem; letter-spacing: 2px;"
+                          class="font-weight-bold">{{item.room_number}}</label>
                       </td>
                       <!-- <td>
                         <label style="font-size: 2.5rem;" class="font-weight-bold">{{item.hn}}</label>
@@ -85,7 +91,7 @@
                 </table>
               </div>
             </div>
-            <!-- <div style="margin-top: 20px;"></div> -->
+            <!-- <div style="margin-top: 20px;"></div>
             <div class="card">
               <div class="card-header h2">
                 ประวัติรอการเรียก</div>
@@ -94,8 +100,7 @@
                   <thead>
                     <tr>
                       <th><span class="h1">ลำดับที่</span></th>
-                      <th><span class="h1">HN</span></th>
-                      <!-- <th><span class="h1">HN</span></th> -->
+                      <th style="text-align: right;"><span class="h1">ช่องบริการ</span></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -109,16 +114,13 @@
                       <td>
                         <label style="font-size: 5rem;" class="font-weight-bold">{{item.hn}}</label>
                       </td>
-                      <!-- <td>
-                        <label style="font-size: 2.5rem;" class="font-weight-bold">{{item.hn}}</label>
-                      </td> -->
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> -->
           </div>
-          <div class="col-md-8">
+          <div class="col-md-7">
 
             <div class="card bg-primary card-img-holder text-white">
               <div class="card-body">
@@ -153,8 +155,10 @@
 
               <div class="card-footer">
                 <div class="float-left">
-                  <i style="cursor: pointer;" *ngIf="isSound" (click)="toggleSound()" class="h2 text-warning float-right mdi mdi-bell-ring"></i>
-                  <i style="cursor: pointer;" *ngIf="!isSound" (click)="toggleSound()" class="h2 text-muted float-right mdi mdi-bell-off"></i>
+                  <i style="cursor: pointer;" *ngIf="isSound" (click)="toggleSound()"
+                    class="h2 text-warning float-right mdi mdi-bell-ring"></i>
+                  <i style="cursor: pointer;" *ngIf="!isSound" (click)="toggleSound()"
+                    class="h2 text-muted float-right mdi mdi-bell-off"></i>
                 </div>
                 <div class="float-right">
                   <span class="h2 text-white font-weight-bold" style="cursor: pointer" (click)="selectServicePoint()">{{servicePointName

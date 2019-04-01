@@ -501,6 +501,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
               this.printQueue(newQueueId);
             }
             this.getAllList();
+            this.getWaiting();
           } else {
             this.alertService.error(rs.message);
           }
