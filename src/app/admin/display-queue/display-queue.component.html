@@ -93,14 +93,17 @@
             </div>
             <div style="margin-top: 20px;"></div>
             <div class="card">
-              <div class="card-header h2">
-                ประวัติรอการเรียก</div>
+              <div class="card-header h2" *ngIf="useHisWaiting == 'Y'">ประวัติรอการเรียก</div>
+              <div class="card-header h2" *ngIf="useHisWaiting == 'N'">ประวัติเรียกคิว</div>
               <div class="card-body" style="margin:0px;padding: 0px">
                 <table class="table table-sm table-striped">
                   <thead>
                     <tr>
                       <th><span class="h1">ลำดับที่</span></th>
-                      <th style="text-align: right;"><span class="h1">ช่องบริการ</span></th>
+                      <th style="text-align: right;">
+                        <span class="h1" *ngIf="useHisWaiting == 'Y'">HN</span>
+                        <span class="h1" *ngIf="useHisWaiting == 'N'">ช่องบริการ</span>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -112,8 +115,11 @@
                         <label style="font-size: 5rem; letter-spacing: 2px;"
                           class="font-weight-bold">{{item.queue_number}}</label>
                       </td>
-                      <td>
-                        <label style="font-size: 5rem;" class="font-weight-bold">{{item.hn}}</label>
+                      <td style="text-align: right;">
+                        <label style="font-size: 5rem;" class="font-weight-bold"
+                          *ngIf="useHisWaiting == 'Y'">{{item.hn}}</label>
+                        <label style="font-size: 5rem;" class="font-weight-bold"
+                          *ngIf="useHisWaiting == 'N'">{{item.room_id}}</label>
                       </td>
                     </tr>
                   </tbody>

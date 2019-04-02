@@ -47,6 +47,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   jwtHelper = new JwtHelperService();
   servicePointTopic = null;
   servicePointSpeak = null;
+  useHisWaiting = null;
 
   servicePointId: any;
   servicePointName: any;
@@ -97,6 +98,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         var decodedToken = this.jwtHelper.decodeToken(token);
         // console.log(decodedToken);
         this.servicePointSpeak = decodedToken.SPEAK_SERVICE_POINT || 'Y';
+        this.useHisWaiting = decodedToken.USE_HIS_WAITING || 'N';
         this.servicePointTopic = decodedToken.SERVICE_POINT_TOPIC;
         this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
         this.notifyUser = decodedToken.NOTIFY_USER;
@@ -376,8 +378,11 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     // connect mqtt
     this.connectWebSocket();
     this.getCurrentQueue();
-    // this.getWorkingHistory();
-    this.getWorkingRunNumber();
+    if (this.useHisWaiting == 'Y') {
+      this.getWorkingRunNumber();
+    } else {
+      this.getWorkingHistory();
+    }
   }
 
   async getCurrentQueue() {
