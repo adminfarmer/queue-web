@@ -48,6 +48,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   servicePointTopic = null;
   servicePointSpeak = null;
   useHisWaiting = null;
+  useHisDmh = null;
 
   servicePointId: any;
   servicePointName: any;
@@ -99,6 +100,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         // console.log(decodedToken);
         this.servicePointSpeak = decodedToken.SPEAK_SERVICE_POINT || 'Y';
         this.useHisWaiting = decodedToken.USE_HIS_WAITING || 'N';
+        this.useHisDmh = decodedToken.USE_HIS_DMH || 'N';
         this.servicePointTopic = decodedToken.SERVICE_POINT_TOPIC;
         this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
         this.notifyUser = decodedToken.NOTIFY_USER;
