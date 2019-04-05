@@ -74,6 +74,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   token: string;
   hide = false;
 
+  soundFile: any;
   constructor(
     private queueService: QueueService,
     private alertService: AlertService,
@@ -208,7 +209,12 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
       }
     });
 
-    audioFiles.push('./assets/audio/channel.mp3');
+    if (this.soundFile) {
+      audioFiles.push(`./assets/audio/${this.soundFile}`);
+    } else {
+      audioFiles.push('./assets/audio/channel.mp3');
+    }
+
 
     _strRoom.forEach(v => {
       audioFiles.push(`./assets/audio/${v}.mp3`);
@@ -372,7 +378,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   onSelectedPoint(event: any) {
     this.servicePointName = event.service_point_name;
     this.servicePointId = event.service_point_id;
-
+    this.soundFile = event.sound_file;
     this.initialSocket();
   }
 
