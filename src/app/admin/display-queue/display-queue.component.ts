@@ -191,11 +191,11 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
 
     let _queue = strQueue.toString().replace(' ', '');
 
-    if (this.servicePointSpeak == 'Y') {
-      _queue = _queue.toString().replace('-', '');
-    } else {
-      _queue = this.numberOnly(_queue);
-    }
+    // if (this.servicePointSpeak == 'Y') {
+    _queue = _queue.toString().replace('-', '');
+    // } else {
+    //   _queue = this.numberOnly(_queue);
+    // }
 
     const _strQueue: any = _queue.split('');
     const _strRoom = strRoomNumber.split('');

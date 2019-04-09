@@ -465,13 +465,13 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
       this.alertService.error('กรุณาตรวจสอบการเชื่อมต่อกับ Notify Server');
     } else {
       try {
-        const rsOne: any = await this.queueService.callQueue(this.servicePointId, this.queueNumber, this.roomId, this.roomNumber, this.queueId, isCompleted);
-        console.log(rsOne);
+        // const rsOne: any = await this.queueService.callQueue(this.servicePointId, this.queueNumber, this.roomId, this.roomNumber, this.queueId, isCompleted);
+        // console.log(rsOne);
 
         const rsTwo: any = await this.queueService.callQueueDepartment(this.departmentId, this.servicePointId, this.queueNumber, this.roomId, this.roomNumber, this.queueId, isCompleted);
         console.log(rsTwo);
 
-        if (rsOne.statusCode === 200 && rsTwo.statusCode === 200) {
+        if (rsTwo.statusCode === 200) {
           this.alertService.success();
           this.getAllList();
           this.roomId = null;
@@ -479,7 +479,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
           this.queueNumber = null;
           this.queueId = null;
         } else {
-          this.alertService.error(rsOne.message, rsTwo.message);
+          this.alertService.error(rsTwo.message);
         }
       } catch (error) {
         console.error(error);
