@@ -119,7 +119,7 @@ export class DisplayQueueGroupComponent implements OnInit, OnDestroy {
     try {
       this.client.end(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   onFinished() {

@@ -141,7 +141,7 @@ export class QueueCalleGroupComponent implements OnInit, OnDestroy {
       // close old connection
       this.client.end(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     this.client = mqttClient.connect(this.notifyUrl, {

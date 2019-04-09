@@ -83,17 +83,51 @@
 
           </div>
           <div class="col-md-7">
+
             <div class="card bg-primary card-img-holder text-white">
+              <div class="card-body">
+                <table class="table table-sm text-white">
+                  <thead>
+                    <tr>
+                      <th>
+                        <div style="font-size: 3rem;" class="font-weight-normal float-left">ลำดับที่</div>
+                      </th>
+                      <th>
+                        <div style="font-size: 3rem;" class="font-weight-normal float-right">ช่องบริการ
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span class="font-weight-bold float-left" style="letter-spacing: 10px; font-size: 15rem;">{{currentQueueNumber
+                          || '-'}}</span>
+                      </td>
+                      <td>
+                        <span class="font-weight-bold float-right" style="letter-spacing: 5px; font-size: 15rem;">{{currentRoomNumber
+                          || '-'}}</span>
+                        <!-- <div style="font-size: 3rem;" class="card-text">{{currentRoomName || '-'}}</div> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="font-size: 5rem;" class="card-text">{{currentRoomName || '-'}}</div>
+                <div style="font-size: 4rem;" class="card-text">ประเภทคิว : {{currentPriorityName || '-'}}
+                </div>
+              </div>
+
+              <!-- <div class="card bg-primary card-img-holder text-white">
               <div class="card-body">
                 <div style="font-size: 3rem;" class="font-weight-bold">ลำดับที่</div>
                 <span class="font-weight-bold" style="letter-spacing: 12px; font-size: 11rem;">{{currentQueueNumber
                   || '-'}}</span>
-                <!-- <h1 class="card-text">HN: {{currentHn || '-'}}</h1> -->
+                <h1 class="card-text">HN: {{currentHn || '-'}}</h1> 
                 <div style="font-size: 3rem;" class="font-weight-bold">ช่องบริการ</div>
                 <span class="font-weight-bold" style="letter-spacing: 12px; font-size: 11rem;">{{currentRoomNumber
                   || '-'}}</span>
                 <div style="font-size: 3rem;" class="card-text">{{currentRoomName || '-'}}</div>
-              </div>
+              </div> -->
 
               <div class="card-footer">
                 <div class="float-left">

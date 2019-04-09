@@ -112,7 +112,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     try {
       this.client.end(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -162,7 +162,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
       // close old connection
       this.client.end(true);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     this.client = mqttClient.connect(this.notifyUrl, {
@@ -174,6 +174,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     const that = this;
     const topic = `${this.servicePointTopic}/${this.servicePointId}`;
     const departmentTopic = `${this.departmentTopic}/${this.departmentId}`;
+
     const visitTopic = this.globalTopic;
 
     this.client.on('connect', () => {
@@ -196,6 +197,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
           });
         }
       });
+
     });
 
 
@@ -463,8 +465,13 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
       this.alertService.error('กรุณาตรวจสอบการเชื่อมต่อกับ Notify Server');
     } else {
       try {
-        const rs: any = await this.queueService.callQueue(this.servicePointId, this.queueNumber, this.roomId, this.roomNumber, this.queueId, isCompleted);
-        if (rs.statusCode === 200) {
+        const rsOne: any = await this.queueService.callQueue(this.servicePointId, this.queueNumber, this.roomId, this.roomNumber, this.queueId, isCompleted);
+        console.log(rsOne);
+
+        const rsTwo: any = await this.queueService.callQueueDepartment(this.departmentId, this.servicePointId, this.queueNumber, this.roomId, this.roomNumber, this.queueId, isCompleted);
+        console.log(rsTwo);
+
+        if (rsOne.statusCode === 200 && rsTwo.statusCode === 200) {
           this.alertService.success();
           this.getAllList();
           this.roomId = null;
@@ -472,7 +479,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
           this.queueNumber = null;
           this.queueId = null;
         } else {
-          this.alertService.error(rs.message);
+          this.alertService.error(rsOne.message, rsTwo.message);
         }
       } catch (error) {
         console.error(error);

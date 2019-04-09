@@ -75,6 +75,8 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   hide = false;
 
   soundFile: any;
+  soundSpeed: any;
+  speakSingle = true;
   constructor(
     private queueService: QueueService,
     private alertService: AlertService,
@@ -93,7 +95,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     try {
       const token = this.token || sessionStorage.getItem('token');
       if (token) {
@@ -106,6 +108,10 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
         this.notifyUser = decodedToken.NOTIFY_USER;
         this.notifyPassword = decodedToken.NOTIFY_PASSWORD;
+        const spk: any = await this.queueService.getSettingSpeak(token);
+        if (spk.statusCode === 200) {
+          this.speakSingle = spk.results === 'N' ? false : true;
+        }
         if (sessionStorage.getItem('servicePoints')) {
           const _servicePoints = sessionStorage.getItem('servicePoints');
           const jsonDecodedServicePoint = JSON.parse(_servicePoints);
@@ -191,23 +197,64 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
       _queue = this.numberOnly(_queue);
     }
 
-    const _strQueue = _queue.split('');
+    const _strQueue: any = _queue.split('');
     const _strRoom = strRoomNumber.split('');
 
     // console.log(_strQueue);
 
     const audioFiles = [];
 
-    audioFiles.push('./assets/audio/please.mp3')
-    // audioFiles.push('./assets/audio/silent.mp3')
-    // audioFiles.push('./assets/audio/number.mp3')
-    // audioFiles.push('./assets/audio/silent.mp3')
+    audioFiles.push('./assets/audio/please.mp3');
+    // audioFiles.push('./assets/audio/silent.mp3');
 
-    _strQueue.forEach(v => {
-      if (v != '-') {
+    if (this.speakSingle) {
+      _strQueue.forEach(v => {
         audioFiles.push(`./assets/audio/${v}.mp3`);
-      }
-    });
+      });
+    } else {
+      const arrQueue = (_strQueue.join('')).match(/[a-z]+|[^a-z]+/gi);
+      arrQueue.forEach(v => {
+        if (!isNaN(v)) {
+          let no = +v;
+          if (no >= 10000) {
+            audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+            audioFiles.push(`./assets/audio/10000.mp3`);
+            no -= +no.toString().substr(0, 1) * 10000;
+          }
+
+          if (no >= 1000) {
+            audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+            audioFiles.push(`./assets/audio/1000.mp3`);
+            no -= +no.toString().substr(0, 1) * 1000;
+          }
+          if (no >= 100) {
+            audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+            audioFiles.push(`./assets/audio/100.mp3`);
+            no -= +no.toString().substr(0, 1) * 100;
+          }
+          if (no >= 10) {
+            if (no >= 30) {
+              audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+              audioFiles.push(`./assets/audio/10.mp3`);
+            } else if (no >= 20) {
+              audioFiles.push(`./assets/audio/20.mp3`);
+            }
+            no -= +no.toString().substr(0, 1) * 10;
+            if (no === 1) {
+              audioFiles.push(`./assets/audio/11.mp3`);
+              no -= 1;
+            }
+          }
+          if (no >= 1) {
+            audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+            // audioFiles.push(`./assets/audio/10.mp3`);
+            no -= +no.toString().substr(0, 1);
+          }
+        } else {
+          audioFiles.push(`./assets/audio/${v}.mp3`);
+        }
+      });
+    }
 
     if (this.soundFile) {
       audioFiles.push(`./assets/audio/${this.soundFile}`);
@@ -215,16 +262,53 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
       audioFiles.push('./assets/audio/channel.mp3');
     }
 
+    if (this.speakSingle) {
+      _strRoom.forEach(v => {
+        audioFiles.push(`./assets/audio/${v}.mp3`);
+      });
+    } else {
+      const arrRoom: any = (_strRoom.join('')).match(/[a-z]+|[^a-z]+/gi);
+      if (!isNaN(arrRoom)) {
+        let no = +arrRoom;
+        if (no >= 10000) {
+          audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+          audioFiles.push(`./assets/audio/10000.mp3`);
+          no -= +no.toString().substr(0, 1) * 10000;
+        }
 
-    _strRoom.forEach(v => {
-      audioFiles.push(`./assets/audio/${v}.mp3`);
-    });
+        if (no >= 1000) {
+          audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+          audioFiles.push(`./assets/audio/1000.mp3`);
+          no -= +no.toString().substr(0, 1) * 1000;
+        }
+        if (no >= 100) {
+          audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+          audioFiles.push(`./assets/audio/100.mp3`);
+          no -= +no.toString().substr(0, 1) * 100;
+        }
+        if (no >= 10) {
+          if (no >= 30) {
+            audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+            audioFiles.push(`./assets/audio/10.mp3`);
+          } else if (no >= 20) {
+            audioFiles.push(`./assets/audio/20.mp3`);
+          }
+          no -= +no.toString().substr(0, 1) * 10;
+          if (no === 1) {
+            audioFiles.push(`./assets/audio/11.mp3`);
+            no -= 1;
+          }
+        }
+        if (no >= 1) {
+          audioFiles.push(`./assets/audio/${no.toString().substr(0, 1)}.mp3`);
+          no -= +no.toString().substr(0, 1);
+        }
+      }
+    }
 
     audioFiles.push('./assets/audio/ka.mp3');
 
     const howlerBank = [];
-
-    // console.log(audioFiles);
 
     const loop = false;
 
@@ -254,7 +338,9 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         this.isPlayingSound = false;
         // remove queue in playlist
         const idx = _.findIndex(that.playlists, { queueNumber: strQueue, roomNumber: strRoomNumber });
-        if (idx > -1) that.playlists.splice(idx, 1);
+        if (idx > -1) {
+          that.playlists.splice(idx, 1);
+        }
         // call sound again
         setTimeout(() => {
           that.isPlayingSound = false;
@@ -263,21 +349,23 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
       }
     };
 
-    audioFiles.forEach(function (current, i) {
+    for (let i = 0; i < audioFiles.length; i++) {
       howlerBank.push(new Howl({
         src: [audioFiles[i]],
         onend: onEnd,
         preload: true,
         html5: true,
       }));
-    });
+      if (this.soundSpeed) {
+        howlerBank[i].rate(this.soundSpeed);
+      }
+    }
 
     try {
       howlerBank[0].play();
     } catch (error) {
       console.log(error);
     }
-
   }
 
   logout() {
@@ -312,6 +400,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
 
       try {
         const _payload = JSON.parse(payload.toString());
+
         if (that.isSound) {
           if (+that.servicePointId === +_payload.servicePointId) {
             // play sound
@@ -375,11 +464,29 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     this.mdlServicePoint.open();
   }
 
-  onSelectedPoint(event: any) {
+  async onSelectedPoint(event: any) {
     this.servicePointName = event.service_point_name;
     this.servicePointId = event.service_point_id;
-    this.soundFile = event.sound_file;
+    if (event.sound_file) {
+      this.soundFile = event.sound_file;
+      this.soundSpeed = event.sound_speed;
+    } else {
+      await this.getSound(this.servicePointId);
+    }
     this.initialSocket();
+  }
+
+  async getSound(servicePointId) {
+    try {
+      const rs: any = await this.queueService.getSound(servicePointId, this.token);
+      if (rs.statusCode === 200) {
+        this.soundFile = rs.results[0].sound_file;
+        this.soundSpeed = rs.results[0].sound_speed;
+      }
+    } catch (error) {
+      console.log(error);
+      // this.alertService.error(error);
+    }
   }
 
   initialSocket() {
