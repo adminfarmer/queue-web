@@ -84,8 +84,7 @@
                 <td>
                   <div class="btn-group">
                     <button class="btn btn-sm btn-success" (click)="callAgain(item)">เรียกซ้ำ</button>
-                    <button class="btn btn-sm btn-danger"
-                      (click)="showSelectPointForMarkPending(item)">พัก/ส่งต่อ</button>
+                    <button class="btn btn-sm btn-danger"(click)="showSelectPointForMarkPending(item)">พัก/ส่งต่อ</button>
                   </div>
                 </td>
               </tr>
@@ -165,14 +164,13 @@
                       </span>
                     </button>
                     <button *ngIf="rooms.length > 1 && rooms.length <= 5" class="btn btn-sm btn-primary"
-                      (click)="setQueueForCall(item)" [ngbPopover]="popContentInterview"
+                      (click)="setQueueForCall(item, 'N')" [ngbPopover]="popContentInterview"
                       popoverTitle="เลือกจุดซักประวัติ">
                       <span class="h4">
                         ซักประวัติ
                       </span>
                     </button>
-                    <button *ngIf="rooms.length === 1" class="btn btn-sm btn-primary" (click)="setCallDetail(item)"
-                      [ngbPopover]="popContentInterview" popoverTitle="เลือกจุดซักประวัติ">
+                    <button *ngIf="rooms.length === 1" class="btn btn-sm btn-primary" (click)="setCallDetail(item, 'N')">
                       <span class="h4">
                         ซักประวัติ
                       </span>
@@ -489,6 +487,12 @@
                         ยกเลิก
                       </span>
                     </button>
+                    <button class="btn btn-sm btn-gradient-primary" (click)="printAgain(item.queue_id)">
+                      <span class="h4">
+                        พิมพ์คิว
+                      </span>
+                    </button>
+
                   </div>
 
                 </td>

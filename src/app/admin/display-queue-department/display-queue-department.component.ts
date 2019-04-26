@@ -113,7 +113,7 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
         this.speakSingle = decodedToken.SPEAK_SINGLE === 'Y' ? true : false;
 
         await this.getServicePoints();
-        
+
 
         if (sessionStorage.getItem('servicePoints')) {
           const _servicePoints = sessionStorage.getItem('servicePoints');
@@ -169,12 +169,13 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
       if (this.playlists.length) {
         const queueNumber = this.playlists[0].queueNumber;
         const roomNumber = this.playlists[0].roomNumber;
-        this.playSound(queueNumber, roomNumber);
+        const isInterview = this.playlists[0].isInterview;
+        this.playSound(queueNumber, roomNumber, isInterview);
       }
     }
   }
 
-  playSound(strQueue: string, strRoomNumber: string) {
+  playSound(strQueue: string, strRoomNumber: string, isInterview: string) {
 
     this.isPlayingSound = true;
 
@@ -198,10 +199,14 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
       this.soundFile = this.servicePoints[idxS].sound_file;
       this.soundSpeed = this.servicePoints[idxS].sound_speed;
     }
-    if (this.soundFile) {
-      audioFiles.push(`./assets/audio/${this.soundFile}`);
+    if (isInterview === 'Y') {
+      audioFiles.push(`./assets/audio/interview-table.mp3`);
     } else {
-      audioFiles.push('./assets/audio/channel.mp3');
+      if (this.soundFile) {
+        audioFiles.push(`./assets/audio/${this.soundFile}`);
+      } else {
+        audioFiles.push('./assets/audio/channel.mp3');
+      }
     }
 
     if (this.speakSingle) {
@@ -369,7 +374,7 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
         if (that.isSound) {
           if (+that.departmentId === +_payload.departmentId) {
             // play sound
-            const sound = { queueNumber: _payload.queueNumber, roomNumber: _payload.roomNumber.toString() };
+            const sound = { queueNumber: _payload.queueNumber, roomNumber: _payload.roomNumber.toString(), isInterview: _payload.isInterview };
             this.servicePointId = _payload.servicePointId;
             that.playlists.push(sound);
             that.prepareSound();
