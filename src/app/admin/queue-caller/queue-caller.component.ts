@@ -162,9 +162,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     try {
       // close old connection
       this.client.end(true);
-    } catch (error) {
-      // console.log(error);
-    }
+    } catch (error) { }
 
     this.client = mqttClient.connect(this.notifyUrl, {
       clientId: clientId,
