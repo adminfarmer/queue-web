@@ -115,6 +115,8 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         this.notifyUser = decodedToken.NOTIFY_USER;
         this.notifyPassword = decodedToken.NOTIFY_PASSWORD;
         this.speakSingle = decodedToken.SPEAK_SINGLE === 'Y' ? true : false;
+        console.log(decodedToken);
+        console.log(this.speakSingle);
 
         if (sessionStorage.getItem('servicePoints')) {
           const _servicePoints = sessionStorage.getItem('servicePoints');
@@ -213,10 +215,86 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
 
     audioFiles.push('./assets/audio/please.mp3');
     // audioFiles.push('./assets/audio/silent.mp3');
+    if (this.speakSingle) {
+      _strQueue.forEach(v => {
+        audioFiles.push(`./assets/audio/${v}.mp3`);
+      });
+    } else {
+      try {
+        if (_strQueue.length === 5) {
+          audioFiles.push(`./assets/audio/${_strQueue[0]}.mp3`);
+          if (_strQueue[1] > 0) {
+            audioFiles.push(`./assets/audio/${_strQueue[1]}.mp3`);
+            audioFiles.push(`./assets/audio/1000.mp3`);
+          }
+          if (_strQueue[2] > 0) {
+            audioFiles.push(`./assets/audio/${_strQueue[2]}.mp3`);
+            audioFiles.push(`./assets/audio/100.mp3`);
+          }
+          if (_strQueue[3] >= 3) {
+            audioFiles.push(`./assets/audio/${_strQueue[3]}.mp3`);
+            audioFiles.push(`./assets/audio/10.mp3`);
+          } else if (_strQueue[3] >= 2) {
+            audioFiles.push(`./assets/audio/20.mp3`);
+          } else {
+            audioFiles.push(`./assets/audio/10.mp3`);
+          }
 
-    _strQueue.forEach(v => {
-      audioFiles.push(`./assets/audio/${v}.mp3`);
-    });
+          if (_strQueue[4] == 1) {
+            audioFiles.push(`./assets/audio/11.mp3`);
+          } else if (_strQueue[4] > 0) {
+            audioFiles.push(`./assets/audio/${_strQueue[4]}.mp3`);
+          }
+
+        } else if (_strQueue.length === 4) {
+          audioFiles.push(`./assets/audio/${_strQueue[0]}.mp3`);
+
+          if (_strQueue[1] > 0) {
+            audioFiles.push(`./assets/audio/${_strQueue[1]}.mp3`);
+            audioFiles.push(`./assets/audio/100.mp3`);
+          }
+
+          if (_strQueue[2] >= 3) {
+            audioFiles.push(`./assets/audio/${_strQueue[2]}.mp3`);
+            audioFiles.push(`./assets/audio/10.mp3`);
+          } else if (_strQueue[2] >= 2) {
+            audioFiles.push(`./assets/audio/20.mp3`);
+          } else {
+            audioFiles.push(`./assets/audio/10.mp3`);
+          }
+
+          if (_strQueue[3] == 1) {
+            audioFiles.push(`./assets/audio/11.mp3`);
+          } else if (_strQueue[3] > 0) {
+            audioFiles.push(`./assets/audio/${_strQueue[3]}.mp3`);
+          }
+
+        } else if (_strQueue.length === 3) {
+          audioFiles.push(`./assets/audio/${_strQueue[0]}.mp3`);
+
+          if (_strQueue[1] >= 3) {
+            audioFiles.push(`./assets/audio/${_strQueue[1]}.mp3`);
+            audioFiles.push(`./assets/audio/10.mp3`);
+          } else if (_strQueue[1] >= 2) {
+            audioFiles.push(`./assets/audio/20.mp3`);
+          } else {
+            audioFiles.push(`./assets/audio/10.mp3`);
+          }
+
+          if (_strQueue[1] === 1 && _strQueue[2] === 1) {
+            audioFiles.push(`./assets/audio/11.mp3`);
+          } else if (_strQueue[2] > 0) {
+            audioFiles.push(`./assets/audio/${_strQueue[2]}.mp3`);
+          }
+
+        } else {
+          audioFiles.push(`./assets/audio/${_strQueue[0]}.mp3`);
+          audioFiles.push(`./assets/audio/${_strQueue[1]}.mp3`);
+        }
+      } catch (error) {
+        console.log('Not numeric!');
+      }
+    }
 
     console.log(this.soundFile);
 
@@ -235,10 +313,11 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         audioFiles.push(`./assets/audio/${v}.mp3`);
       });
     } else {
-
       try {
         if (_strRoom.length === 2) {
           var _roomNumber = +strRoomNumber;
+          console.log(_roomNumber);
+
           if (_roomNumber >= 30) {
             audioFiles.push(`./assets/audio/${_strRoom[0]}.mp3`);
             audioFiles.push(`./assets/audio/10.mp3`);
