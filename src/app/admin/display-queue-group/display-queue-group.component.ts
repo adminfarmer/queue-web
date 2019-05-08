@@ -154,7 +154,6 @@ export class DisplayQueueGroupComponent implements OnInit, OnDestroy {
     _queue = _.map(_queue, (v: any) => { return v.toString().replace('-', '') })
 
     const _strQueue = _.map(_queue, (v: any) => { return v.split('') });
-    console.log(_strQueue)
     const _strRoom = strRoomNumber.split('');
 
     const audioFiles = [];

@@ -236,7 +236,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           } else if (_strQueue[3] >= 2) {
             audioFiles.push(`./assets/audio/20.mp3`);
-          } else {
+          } else if (_strQueue[3] > 0) {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
@@ -259,7 +259,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           } else if (_strQueue[2] >= 2) {
             audioFiles.push(`./assets/audio/20.mp3`);
-          } else {
+          } else if (_strQueue[2] > 0) {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
@@ -277,7 +277,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           } else if (_strQueue[1] >= 2) {
             audioFiles.push(`./assets/audio/20.mp3`);
-          } else {
+          } else if (_strQueue[1] > 0) {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
@@ -295,8 +295,6 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
         console.log('Not numeric!');
       }
     }
-
-    console.log(this.soundFile);
 
     if (isInterview === 'Y') {
       audioFiles.push(`./assets/audio/interview-table.mp3`);
