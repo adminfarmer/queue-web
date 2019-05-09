@@ -281,7 +281,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
-          if (_strQueue[1] === 1 && _strQueue[2] === 1) {
+          if (_strQueue[2] == 1) {
             audioFiles.push(`./assets/audio/11.mp3`);
           } else if (_strQueue[2] > 0) {
             audioFiles.push(`./assets/audio/${_strQueue[2]}.mp3`);

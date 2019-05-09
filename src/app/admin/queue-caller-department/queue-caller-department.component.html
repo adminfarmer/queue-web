@@ -183,32 +183,11 @@
                     style="letter-spacing: 2px;">{{item.service_point_prefix}}{{item.priority_prefix}}{{item.queue_number}}</span>
                 </td>
                 <td>
+                <td>
                   <div class="btn-group">
-                    <!-- <button class="btn btn-sm btn-success" (click)="setQueueForCall(item)">เรียกคิว</button> -->
-                    <button *ngIf="item.rooms.length > 5" class="btn btn-sm btn-success"
-                      (click)="openModalSelectRoom(item)">
-                      <span class="h4">
-                        เรียกคิว
-                      </span>
-                    </button>
-                    <button *ngIf="item.rooms.length > 1 && item.rooms.length <= 5" class="btn btn-sm btn-success"
-                      (click)="setQueueForCall(item)" [ngbPopover]="popContent" popoverTitle="เลือกช่องรับบริการ">
-                      <span class="h4">
-                        เรียกคิว
-                      </span>
-                    </button>
-                    <button *ngIf="item.rooms.length === 1" class="btn btn-sm btn-success"
-                      (click)="setCallDetail(item)">
-                      <span class="h4">
-                        เรียกคิว
-                      </span>
-                    </button>
-                    <button disabled="disabled" *ngIf="item.rooms.length === 0" class="btn btn-sm btn-success">
-                      <span class="h4">
-                        เรียกคิว
-                      </span>
-                    </button>
-                    <button class="btn btn-sm btn-danger" (click)="showSelectPointForMarkPending(item)">ส่งต่อ</button>
+                    <button class="btn btn-sm btn-success" (click)="setCallDetail(item)">เรียกซ้ำ</button>
+                    <button class="btn btn-sm btn-danger"
+                      (click)="showSelectPointForMarkPending(item)">พัก/ส่งต่อ</button>
                   </div>
                 </td>
               </tr>
