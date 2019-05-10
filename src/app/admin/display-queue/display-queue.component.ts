@@ -240,7 +240,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
-          if (_strQueue[4] == 1) {
+          if (_strQueue[4] == 1 && _strQueue[3] != 0) {
             audioFiles.push(`./assets/audio/11.mp3`);
           } else if (_strQueue[4] > 0) {
             audioFiles.push(`./assets/audio/${_strQueue[4]}.mp3`);
@@ -263,7 +263,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
-          if (_strQueue[3] == 1) {
+          if (_strQueue[3] == 1 && _strQueue[2] != 0) {
             audioFiles.push(`./assets/audio/11.mp3`);
           } else if (_strQueue[3] > 0) {
             audioFiles.push(`./assets/audio/${_strQueue[3]}.mp3`);
@@ -281,7 +281,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
             audioFiles.push(`./assets/audio/10.mp3`);
           }
 
-          if (_strQueue[2] == 1) {
+          if (_strQueue[2] == 1 && _strQueue[1] != 0) {
             audioFiles.push(`./assets/audio/11.mp3`);
           } else if (_strQueue[2] > 0) {
             audioFiles.push(`./assets/audio/${_strQueue[2]}.mp3`);
