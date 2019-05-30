@@ -14,6 +14,7 @@ import { DepartmentsComponent } from './settings/departments/departments.compone
 import { PriorityComponent } from './settings/priority/priority.component';
 import { QueueCalleGroupComponent } from './queue-caller-group/queue-caller-group.component';
 import { PrinterComponent } from './settings/printer/printer.component';
+import { SettingKioskComponent } from './setting-kiosk/setting-kiosk.component';
 
 const routes: Routes = [
   { path: 'display', redirectTo: 'display-queue', pathMatch: 'full' },
@@ -32,9 +33,10 @@ const routes: Routes = [
       { path: 'queue-caller-group', component: QueueCalleGroupComponent },
       { path: 'queue-center', component: QueueCenterComponent },
       { path: 'generate-token', component: GenerateTokenComponent },
-      { path: '', redirectTo: 'queue-caller', pathMatch: 'full' },
       { path: 'printer', component: PrinterComponent },
+      { path: 'setting-kiosk', component: SettingKioskComponent },
       // { path: '', redirectTo: 'visit', pathMatch: 'full' },
+      { path: '', redirectTo: 'queue-caller', pathMatch: 'full' },
 
     ]
   },
