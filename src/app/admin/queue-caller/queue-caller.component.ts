@@ -245,7 +245,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     this.connectWebSocket();
   }
 
-  onNotify($event) {
+  onNotify($event: any) {
     console.log('Finished');
   }
 

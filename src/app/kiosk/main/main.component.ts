@@ -35,6 +35,7 @@ export class MainComponent implements OnInit {
   cardBirthDate: any;
   his: any;
   hisHn: any;
+  hisPttype: any;
   hisFullName: any;
   hisBirthDate: any;
 
@@ -80,6 +81,15 @@ export class MainComponent implements OnInit {
     await this.connectWebSocket();
     await this.getInfoHospital();
     await this.getServicePoint();
+  }
+
+  onFinished() {
+    console.log('Time finished!');
+    this.connectWebSocket();
+  }
+
+  onNotify($event: any) {
+    console.log('Finished');
   }
 
   connectWebSocket() {
@@ -228,6 +238,7 @@ export class MainComponent implements OnInit {
   async setDataFromHIS(data) {
     this.his = data;
     this.hisHn = data.hn;
+    this.hisPttype = data.namepttype;
     this.hisFullName = `${data.title}${data.firstName} ${data.lastName}`;
     this.hisBirthDate = data.birthDate;
     if (this.his) {
@@ -269,7 +280,8 @@ export class MainComponent implements OnInit {
 
     const data = {
       queueId: queueId,
-      topic: topicPrint
+      topic: topicPrint,
+      printSmallQueue: printSmallQueue
     };
     try {
       const rs: any = await this.kioskService.print(this.token, data);
@@ -321,10 +333,12 @@ export class MainComponent implements OnInit {
     try {
 
       const ovst: any = await this.kioskService.regisOvst(this.token, data);
-      console.log(ovst);
-      if (ovst) {
+      // console.log(ovst);
+
+      if (ovst.info != 'NO') {
         const rs: any = await this.kioskService.register(this.token, data);
-        if (rs.statusCode === 200) {
+        // console.log(rs);
+        if (rs.statusCode = 200) {
           if (rs.queueId) {
             await this.print(rs.queueId);
             this.clearData();
@@ -336,7 +350,7 @@ export class MainComponent implements OnInit {
         }
 
       } else {
-        this.alertService.error('ไม่สามารถลงทะเบียนได้ ');
+        this.alertService.error('มีการลงทะเบียนในระบบแล้ว ');
         this.isPrinting = false;
       }
 
