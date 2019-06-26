@@ -102,6 +102,9 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    var now = new Date();
+    console.log(now instanceof Date);
+
     try {
       const token = this.token || sessionStorage.getItem('token');
       if (token) {
