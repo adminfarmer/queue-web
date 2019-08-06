@@ -74,11 +74,12 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
   token: any;
   hide = false;
 
-  servicePoints = [];
+  servicePoints: any = [];
   soundFile: any;
   soundSpeed: any;
   servicePointId: any;
   speakSingle = true;
+  soundList: any = [];
   constructor(
     private queueService: QueueService,
     private alertService: AlertService,
@@ -159,12 +160,13 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
         const queueNumber = this.playlists[0].queueNumber;
         const roomNumber = this.playlists[0].roomNumber;
         const isInterview = this.playlists[0].isInterview;
-        this.playSound(queueNumber, roomNumber, isInterview);
+        const roomId = this.playlists[0].roomId;
+        this.playSound(queueNumber, roomNumber, isInterview, roomId);
       }
     }
   }
 
-  async playSound(strQueue: string, strRoomNumber: string, isInterview: string) {
+  playSound(strQueue: string, strRoomNumber: string, isInterview: string, roomId: any) {
 
     this.isPlayingSound = true;
 
@@ -260,7 +262,8 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
       }
     }
 
-    const idxS = _.findIndex(this.servicePoints, { 'service_point_id': this.servicePointId });
+    const idxS = _.findIndex(this.servicePoints, { 'service_point_id': +this.servicePointId });
+
     if (idxS > -1) {
       this.soundFile = this.servicePoints[idxS].sound_file;
       this.soundSpeed = this.servicePoints[idxS].sound_speed;
@@ -269,11 +272,21 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
     if (isInterview === 'Y') {
       audioFiles.push(`./assets/audio/interview-table.mp3`);
     } else {
-      if (this.soundFile) {
-        audioFiles.push(`./assets/audio/${this.soundFile}`);
+      const idx = _.findIndex(this.soundList, { 'room_id': +roomId });
+      if (idx > -1) {
+        audioFiles.push(`./assets/audio/${this.soundList[idx].sound_file}`);
       } else {
-        audioFiles.push('./assets/audio/channel.mp3');
+        if (this.soundFile) {
+          audioFiles.push(`./assets/audio/${this.soundFile}`);
+        } else {
+          audioFiles.push('./assets/audio/channel.mp3');
+        }
       }
+      // if (this.soundFile) {
+      //   audioFiles.push(`./assets/audio/${this.soundFile}`);
+      // } else {
+      //   audioFiles.push('./assets/audio/channel.mp3');
+      // }
     }
 
     if (this.speakSingle) {
@@ -435,7 +448,7 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
         if (that.isSound) {
           if (+that.departmentId === +_payload.departmentId) {
             // play sound
-            const sound = { queueNumber: _payload.queueNumber, roomNumber: _payload.roomNumber.toString(), isInterview: _payload.isInterview };
+            const sound = { queueNumber: _payload.queueNumber, roomNumber: _payload.roomNumber.toString(), isInterview: _payload.isInterview, roomId: _payload.roomId };
             this.servicePointId = _payload.servicePointId;
             that.playlists.push(sound);
             that.prepareSound();
@@ -473,10 +486,23 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSelectDepartment(event: any) {
+  async onSelectDepartment(event: any) {
     this.departmentName = event.department_name;
     this.departmentId = event.department_id;
+    await this.getSoundList(this.departmentId);
     this.initialSocket();
+  }
+
+  async getSoundList(departmentId) {
+    try {
+      const rss: any = await this.queueService.getSoundListDepartment(departmentId, this.token);
+      if (rss.statusCode === 200) {
+        this.soundList = rss.results;
+      }
+    } catch (error) {
+      console.log(error);
+      this.alertService.error(error);
+    }
   }
 
   initialSocket() {

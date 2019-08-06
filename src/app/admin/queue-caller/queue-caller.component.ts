@@ -26,6 +26,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   @ViewChild('mdlSelectRoom') private mdlSelectRoom: ModalSelectRoomComponent;
 
   points: any = [];  //Ubonket10
+  userId: any;
   message: string;
   servicePointId: any;
   servicePointName: any;
@@ -71,6 +72,8 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   departmentId: any;
   pendingOldQueue: any;
 
+  sortWaiting = 1;
+  query = '';
   @ViewChild(CountdownComponent) counter: CountdownComponent;
 
   constructor(
@@ -87,17 +90,20 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     this.globalTopic = decodedToken.QUEUE_CENTER_TOPIC;
     // console.log(decodedToken);
     this.departmentTopic = decodedToken.DEPARTMENT_TOPIC || 'queue/department';
-
-
+    this.userId = decodedToken.userId;
     this.notifyUrl = `ws://${decodedToken.NOTIFY_SERVER}:${+decodedToken.NOTIFY_PORT}`;
 
     this.notifyUser = decodedToken.NOTIFY_USER;
     this.notifyPassword = decodedToken.NOTIFY_PASSWORD;
 
-    const _servicePoints = sessionStorage.getItem('servicePoints');
-    const jsonDecodedServicePoint = JSON.parse(_servicePoints);
-    if (jsonDecodedServicePoint.length === 1) {
-      this.onSelectedPoint(jsonDecodedServicePoint[0]);
+    const _servicePoints = JSON.parse(localStorage.getItem(`queueCallerServicePoints${this.userId}`));
+    if (_servicePoints) {
+      this.onSelectedPoint(_servicePoints);
+    } else {
+      const _servicePoints2 = JSON.parse(sessionStorage.getItem('servicePoints'));
+      if (_servicePoints2.length === 1) {
+        this.onSelectedPoint(_servicePoints2[0]);
+      }
     }
   }
 
@@ -282,7 +288,8 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
 
   async getWaiting() {
     try {
-      const rs: any = await this.queueService.getWaiting(this.servicePointId, this.pageSize, this.offset);
+      const sort = await this.getSort(this.sortWaiting);
+      const rs: any = await this.queueService.getWaiting(this.servicePointId, this.pageSize, this.offset, sort, this.query);
       if (rs.statusCode === 200) {
         this.waitingItems = rs.results;
         this.total = rs.total;
@@ -295,10 +302,33 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
       this.alertService.error();
     }
   }
+  searchWorking(e) {
+    if (e.keyCode === 13) {
+      this.getWorking();
+    }
+  }
+
+  searchWaiting(e) {
+    if (e.keyCode === 13) {
+      this.getWaiting();
+    }
+  }
+
+  searchPending(e) {
+    if (e.keyCode === 13) {
+      this.getPending();
+    }
+  }
+
+  searchHistory(e) {
+    if (e.keyCode === 13) {
+      this.getHistory();
+    }
+  }
 
   async getWorking() {
     try {
-      const rs: any = await this.queueService.getWorking(this.servicePointId);
+      const rs: any = await this.queueService.getWorking(this.servicePointId, null, this.query);
       if (rs.statusCode === 200) {
         this.workingItems = rs.results;
       } else {
@@ -313,7 +343,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
 
   async getHistory() {
     try {
-      const rs: any = await this.queueService.getWorkingHistory(this.servicePointId);
+      const rs: any = await this.queueService.getWorkingHistory(this.servicePointId, null, this.query);
       if (rs.statusCode === 200) {
         this.historyItems = rs.results;
       } else {
@@ -328,7 +358,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
 
   async getPending() {
     try {
-      const rs: any = await this.queueService.getPending(this.servicePointId);
+      const rs: any = await this.queueService.getPending(this.servicePointId, this.query);
       if (rs.statusCode === 200) {
         this.pendingItems = rs.results;
       } else {
@@ -385,6 +415,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   }
 
   onSelectedPoint(event: any) {
+    localStorage.setItem(`queueCallerServicePoints${this.userId}`, JSON.stringify(event));
     if (event) {
       if (!this.isMarkPending) {
         this.servicePointName = event.service_point_name;
@@ -627,12 +658,22 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     this.mdlSelectRoom.open();
   }
 
-  async printAgain(queueId) {
-    const confirm = await this.alertService.confirm('ต้องการพิมพ์บัตรคิว หรือไม่?');
-    if (confirm) {
-      console.log(confirm);
+  onClickSortWaiting() {
+    if (this.sortWaiting === 3) {
+      this.sortWaiting = 1;
+    } else {
+      this.sortWaiting += 1;
+    }
+    this.getWaiting();
+  }
 
-      this.printQueue(queueId);
+  getSort(id) {
+    if (id === 2) {
+      return 'ASC';
+    } else if (id === 3) {
+      return 'DESC';
+    } else {
+      return '';
     }
   }
 
