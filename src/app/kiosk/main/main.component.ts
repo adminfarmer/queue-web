@@ -8,12 +8,17 @@ import { MqttClient } from 'mqtt';
 import * as Random from 'random-js';
 import { CountdownComponent } from 'ngx-countdown';
 import * as moment from 'moment';
+import { ModalSelectPriorityComponent } from 'src/app/shared/modal-select-priority/modal-select-priority.component';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  @ViewChild('mdlSelectPriority') mdlSelectPriority: ModalSelectPriorityComponent;
+  priority_id: any;
+  priority_name: string;
   jwtHelper = new JwtHelperService();
   hn: any;
   tabServicePoint = false;
@@ -298,7 +303,7 @@ export class MainComponent implements OnInit {
 
   async register(servicePoint) {
     this.isPrinting = true;
-    const priorityId = localStorage.getItem('kiosDefaultPriority') || '1';
+    const priorityId = this.priority_id || localStorage.getItem('kiosDefaultPriority');
     const data = {
       hn: this.his.hn,
       vn: 'K' + moment().format('x'),
@@ -390,4 +395,19 @@ export class MainComponent implements OnInit {
     this.router.navigate(['/admin/setting-kiosk']);
 
   }
+
+  openPriority() {
+    // this.patientName = `${visit.first_name} ${visit.last_name} (${visit.hn})`;
+    // this.selectedVisit = visit;
+    this.mdlSelectPriority.open();
+  }
+
+  onSelectedPriority(priority: any) {
+    this.priority_id = priority.priority_id;
+    this.priority_name = priority.priority_name;
+    console.log(priority);
+
+    // this.doRegister(priority.priority_id, this.selectedVisit);
+  }
+
 }

@@ -66,12 +66,17 @@
       </div>
       <div style="margin: 20px;"></div>
 
+      <button type="button" class="button-black" style="height: 6rem; font-size: 1.8em; display: block; margin: auto;"
+        (click)="openPriority()"><span *ngIf="!priority_name">เลือกประเภทผู้รับบริการ </span><span
+          *ngIf="priority_name">ผู้รับบริหาร {{priority_name}}</span></button>
+
+      <div style="margin: 20px;"></div>
+
       <button *ngIf="btnSelectServicePoint" type="button" class="btn btn-primary"
         style="height: 6rem; font-size: 1.8em; display: block; margin: auto;"
         (click)="onSelectServicePointList()">เลือกแผนกเข้ารับบริการ</button>
 
     </div>
-
 
     <div id="divDepartment" *ngIf="tabServicePoint">
       <div style="margin: 20px;"></div>
@@ -145,3 +150,5 @@
 
   </div>
 </div>
+<app-modal-select-priority #mdlSelectPriority (onSelected)="onSelectedPriority($event)">
+</app-modal-select-priority>
