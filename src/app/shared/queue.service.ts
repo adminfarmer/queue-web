@@ -284,6 +284,7 @@ export class QueueService {
       queue: queue
     }, this.httpOptions).toPromise();
   }
+
   async callQueueGroup(servicePointId: any, queueNumber: any, roomId: any, roomNumber: any, queueId: any, isCompleted: any = 'Y', queueRunning: any) {
     const _url = `${this.apiUrl}/queue/caller-group/${queueId}`;
     return this.httpClient.post(_url, {
@@ -408,6 +409,16 @@ export class QueueService {
     }
 
     return this.httpClient.get(_url, _httpOptions).toPromise();
+  }
+
+  //Ubonket10
+  async getCancel(servicePointId: any) {
+    const _url = `${this.apiUrl}/queue/cancel/${servicePointId}`;
+    return this.httpClient.get(_url, this.httpOptions).toPromise();
+  }
+  async noCancel(queueId: any) {
+    const _url = `${this.apiUrl}/queue/nocancel/${queueId}`;
+    return this.httpClient.get(_url, this.httpOptions).toPromise();
   }
 
 }
