@@ -648,6 +648,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
 
   }
 
+  //Ubonket10
   async getCancel() {
     try {
       const rs: any = await this.queueService.getCancel(this.servicePointId);
@@ -665,6 +666,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     }
   }
 
+  //Ubonket10
   async nocancelQueue(queue: any) {
     const _confirm = await this.alertService.confirm(`ต้องการเรียกคิวนี้ [${queue.queue_number}] กับเข้าระบบใช่หรือไม่?`);
     if (_confirm) {
