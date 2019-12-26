@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
     if (this.username && this.password) {
       try {
         const rs: any = await this.loginService.doLogin(this.username, this.password);
+        console.log(rs);
+
         if (rs.token) {
           const token = rs.token;
           sessionStorage.setItem('token', token);

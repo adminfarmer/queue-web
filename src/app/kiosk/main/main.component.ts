@@ -47,6 +47,12 @@ export class MainComponent implements OnInit {
   rightName: any;
   rightStartDate: any;
   rightHospital: any;
+  isSendAPIGET: any;
+  isSendAPIPOST: any;
+  urlSendAPIGET: any;
+  urlSendAPIPOST: any;
+
+
   @ViewChild(CountdownComponent) counter: CountdownComponent;
 
   constructor(
@@ -70,7 +76,10 @@ export class MainComponent implements OnInit {
         this.notifyUser = decodedToken.NOTIFY_USER;
         this.notifyPassword = decodedToken.NOTIFY_PASSWORD;
         this.kioskId = localStorage.getItem('kioskId') || '1';
-
+        this.urlSendAPIGET = localStorage.getItem('urlSendVisitGet') ? localStorage.getItem('urlSendVisitGet') : null;
+        this.urlSendAPIPOST = localStorage.getItem('urlSendVisitPost') ? localStorage.getItem('urlSendVisitPost') : null;
+        this.isSendAPIGET = localStorage.getItem('isSendAPIGET') === 'Y' ? true : false;
+        this.isSendAPIPOST = localStorage.getItem('isSendAPIPOST') === 'Y' ? true : false;
         this.initialSocket();
       } else {
         this.alertService.error('ไม่พบ TOKEN');
@@ -346,8 +355,12 @@ export class MainComponent implements OnInit {
         if (rs.statusCode = 200) {
           if (rs.queueId) {
             await this.print(rs.queueId);
-            this.clearData();
-            this.alertService.success('ลงทะเบียน เรียบร้อยแล้ว');
+            if (this.isSendAPIGET) {
+              await this.kioskService.sendAPITRIGGER(this.token, 'GET', this.urlSendAPIGET, this.his.hn, this.cardCid, servicePoint.local_code, servicePoint.service_point_id);
+            }
+            if (this.isSendAPIPOST) {
+              await this.kioskService.sendAPITRIGGER(this.token, 'POST', this.urlSendAPIPOST, this.his.hn, this.cardCid, servicePoint.local_code, servicePoint.service_point_id);
+            }
           }
         } else {
           this.alertService.error('ไม่สามารถลงทะเบียนได้');

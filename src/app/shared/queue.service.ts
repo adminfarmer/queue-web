@@ -358,6 +358,7 @@ export class QueueService {
   }
 
   async getSound(servicePointId: any, token: any = null) {
+
     const _url = `${this.apiUrl}/queue/sound/service-point?servicePointId=${servicePointId}`;
     var _httpOptions = {};
 

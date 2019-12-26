@@ -127,8 +127,12 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
           const _servicePoints = sessionStorage.getItem('servicePoints');
           const jsonDecodedServicePoint = JSON.parse(_servicePoints);
           if (jsonDecodedServicePoint.length === 1) {
+            console.log("zzz");
+
             this.onSelectedPoint(jsonDecodedServicePoint[0]);
           } else if (this.servicePointId && this.servicePointName) {
+            console.log('xxxx');
+
             this.onSelectedPoint({ 'service_point_id': this.servicePointId, 'service_point_name': this.servicePointName });
             this.initialSocket();
           }
@@ -516,26 +520,34 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   }
 
   async onSelectedPoint(event: any) {
+    // console.log(event);
     this.servicePointName = event.service_point_name;
     this.servicePointId = event.service_point_id;
+
     await this.getSoundList(this.servicePointId);
-    console.log(event.sound_file);
 
     if (event.sound_file) {
+      console.log(event.sound_file);
       this.soundFile = event.sound_file;
       this.soundSpeed = event.sound_speed;
     } else {
       await this.getSound(this.servicePointId);
+      console.log(this.soundFile);
     }
     this.initialSocket();
   }
 
   async getSound(servicePointId) {
+    // console.log(servicePointId, ':xx:', this.token);
+
     try {
       const rs: any = await this.queueService.getSound(servicePointId, this.token);
+      console.log(rs);
       if (rs.statusCode === 200) {
+
         this.soundFile = rs.results.length ? rs.results[0].sound_file : null;
         this.soundSpeed = rs.results.length ? rs.results[0].sound_speed : null;
+
       }
     } catch (error) {
       console.log(error);
