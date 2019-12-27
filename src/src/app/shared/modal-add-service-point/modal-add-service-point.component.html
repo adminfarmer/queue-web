@@ -1,0 +1,78 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">จุดให้บริการ</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="servicePointName" class="required">ชื่อจุดให้บริการ</label>
+              <input type="text" name="servicePointName" id="servicePointName" class="form-control"
+                name="servicePointName" [(ngModel)]="servicePointName">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="localCode" class="required">รหัสใน HIS</label>
+              <input type="text" maxlength="6" name="localCode" id="localCode" class="form-control" name="localCode"
+                [(ngModel)]="localCode">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="prefix" class="required">PREFIX</label>
+              <select class="form-control" name="prefix" [(ngModel)]="prefix">
+                <option value="" selected>เลือก</option>
+                <option *ngFor="let item of prefixes" [value]="item">{{item}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-8">
+              <label for="prefix" class="required">แผนกหลัก</label>
+              <select class="form-control" name="departmentId" [(ngModel)]="departmentId">
+                <option value="" selected>เลือกแผนก</option>
+                <option *ngFor="let item of departments" [value]="item.department_id">{{item.department_name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group form-check col-md-6">
+              <input type="checkbox" class="form-check-input" id="kios" name="kios" [(ngModel)]="kios">
+              <label class="form-check-label" for="kios">สำหรับ KIOS</label>
+            </div>
+            <div class="form-group form-check col-md-6">
+              <input type="checkbox" class="form-check-input" id="useOldQueue" name="useOldQueue"
+                [(ngModel)]="useOldQueue">
+              <label class="form-check-label" for="useOldQueue">ใช้คิวเดิมออกคิว</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group form-check col-md-12">
+              <input type="checkbox" class="form-check-input" id="groupCompare" name="groupCompare"
+                [(ngModel)]="groupCompare">
+              <label class="form-check-label" for="groupCompare">ตัดคิวเมื่อเรียกคิวกลุ่ม</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group form-check col-md-12">
+              <input type="checkbox" class="form-check-input" id="priorityQueueRunning" name="priorityQueueRunning"
+                [(ngModel)]="priorityQueueRunning">
+              <label class="form-check-label" for="priorityQueueRunning">ออกคิวตามประเภทผู้ป่วย</label>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="save()">บันทึก</button>
+    <button type="button" class="btn btn-outline-danger" (click)="dismiss()">ยกเลิก</button>
+  </div>
+</ng-template>

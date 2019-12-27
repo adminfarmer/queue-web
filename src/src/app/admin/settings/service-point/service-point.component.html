@@ -1,0 +1,90 @@
+<div class="page-header">
+  <h3 class="page-title">
+    จุดบริการ
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript://" routerLink="/admin/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">จุดบริการ</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="openRegister()" class="float-right btn-lg btn btn-sm btn-gradient-success"> <i
+                class="mdi mdi-plus"></i>
+              เพิ่มจุดบริการ
+            </button>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>รหัสใน HIS</th>
+              <th>ชื่อจุดบริการ</th>
+              <th>แผนก</th>
+              <th>PREFIX</th>
+              <th>KIOS</th>
+              <th>ใช้คิวเดิม</th>
+              <th>ตัดคิวกลุ่ม</th>
+              <th>ออกคิวตามประเภท</th>
+              <th style="width: 150px;">#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{ item.local_code }}</td>
+              <td>{{ item.service_point_name }}</td>
+              <td>{{ item.department_name }}</td>
+              <td>{{ item.prefix }}</td>
+              <td>
+                <i class="mdi mdi-check text-success" *ngIf="item.kios === 'Y'"></i>
+                <i class="mdi mdi-close text-danger" *ngIf="item.kios === 'N'"></i>
+              </td>
+              <td>
+                <i class="mdi mdi-check text-success" *ngIf="item.use_old_queue === 'Y'"></i>
+                <i class="mdi mdi-close text-danger" *ngIf="item.use_old_queue === 'N'"></i>
+              </td>
+              <td>
+                <i class="mdi mdi-check text-success" *ngIf="item.group_compare === 'Y'"></i>
+                <i class="mdi mdi-close text-danger" *ngIf="item.group_compare === 'N'"></i>
+              </td>
+              <td>
+                <i class="mdi mdi-check text-success" *ngIf="item.priority_queue_running === 'Y'"></i>
+                <i class="mdi mdi-close text-danger" *ngIf="item.priority_queue_running === 'N'"></i>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-icon-append btn-gradient-success" (click)="openEdit(item)">
+                    <i class="mdi mdi-pencil"></i> แก้ไข
+                  </button>
+                  <button class="btn btn-sm btn-gradient-primary" (click)="showRooms(item)">
+                    <i class="mdi mdi-format-list-bulleted"></i> ช่องบริการ
+                  </button>
+                  <button class="btn btn-sm btn-gradient-primary" (click)="showModalSound(item)">
+                    <i class="mdi mdi-access-point"></i> ตั้งค่าเสียง
+                  </button>
+                  <button class="btn btn-sm btn-gradient-danger" (click)="remove(item)">
+                    <i class="mdi mdi-delete-outline"></i> ลบ
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal-add-service-point [info]="info" #mdlServicePoint (onSave)="onSave($event)"></app-modal-add-service-point>
+<app-modal-rooms [servicePointId]="servicePointId" [servicePointName]="servicePointName" #mdlRooms
+  (onSave)="onSaveRoom($event)"></app-modal-rooms>
+
+<app-modal-setting-sound [servicePointId]="servicePointId" (onSave)="onSaveSound()" #mdlSettingSound>
+</app-modal-setting-sound>

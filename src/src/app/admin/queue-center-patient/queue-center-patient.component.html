@@ -1,0 +1,147 @@
+<div class="container-scroller">
+  <!-- partial:../../partials/_navbar.html -->
+  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0" [ngClass]="{'hide': hide}">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+      <a class="navbar-brand brand-logo" href="javascript://">
+        <img style="width: 40px; height: 40px;" src="./assets/images/iconQ4U100.png" alt=""></a>
+      <span class="font-weight-bold" style="font-size: 1.5rem;">
+        ระบบคิวออนไลน์
+      </span>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-stretch">
+
+      <ul class="navbar-nav navbar-nav-right">
+        <li class="nav-item d-lg-block full-screen-link">
+          <a class="nav-link" href="javascript://" routerLink="/admin">
+            <i class="mdi mdi-home text-success"></i>[Home]
+          </a>
+        </li>
+        <li class="nav-item d-lg-block full-screen-link">
+          <a class="nav-link" appToggleFullscreen (click)="hide = true" href="javascript://">
+            <i class="mdi mdi-fullscreen text-primary"></i>[Full Screen]
+          </a>
+        </li>
+        <li class="nav-item d-lg-block full-screen-link">
+          <a class="nav-link" (click)="logout()" href="javascript://">
+            <i class="mdi mdi-power text-danger"></i>[Exit]
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+      <div class="content-wrapper" style="padding: 1rem 2.25rem">
+        <div [ngClass]="{'hide': !hide}" style="text-align: right;font-size: 1rem">
+          <a href="javascript://" routerLink="/admin"><i class="mdi mdi-home text-success"></i></a>
+          <a appToggleFullscreen (click)="hide = false" href="javascript://"><i class="mdi mdi-fullscreen text-primary"></i></a>
+          <a (click)="logout()" href="javascript://"><i class="mdi mdi-power text-danger"></i></a>
+        </div>
+
+        <div class="card card-inverse-danger" *ngIf="isOffline">
+          <div class="card-body">
+            <p class="mb-4">
+              เกิดข้อผิดพลาดในการเชื่อมต่อกับ Notify Server.
+            </p>
+            <button class="btn btn-danger" (click)="connectWebSocket()">เชื่อมต่อใหม่ (<strong>
+                <countdown [config]="{leftTime: 15, template: '$!s!'}" (finished)="onFinished()"
+                  (notify)="onNotify($event)"></countdown>
+              </strong>)</button>
+          </div>
+        </div>
+
+        <div class="page-header">
+          <!-- <h1 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+              <i class="mdi mdi-cast"></i>
+            </span>
+            <span style="font-size: 1.4rem;">คิวรับบริการปัจจุบัน</span>
+          </h1>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+               
+              </li>
+            </ol>
+          </nav> -->
+          <div style="text-align: center;">
+            <span class="h1 font-weight-bold text-muted">วันที่ {{ currentDate }} </span>
+            <span class="h1 text-muted font-weight-bold" style="letter-spacing: 5px;">{{ currentTime |
+              shortTime }}
+            </span>
+            <span class="h2 text-muted">ปรับปรุงล่าสุด: {{lastupdateTime | shortTime}}</span>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 0px;">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">จุดให้บริการ</span>
+              </div>
+              <div class="col-md-2" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">ช่อง</span>
+              </div>
+              <div class="col-md-2" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">หมายเลข</span>
+              </div>
+              <div class="col-md-2" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">รอ</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">จุดให้บริการ</span>
+              </div>
+              <div class="col-md-2" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">ช่อง</span>
+              </div>
+              <div class="col-md-2" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">หมายเลข</span>
+              </div>
+              <div class="col-md-2" style="padding-left: 50px; padding-right: 50px;">
+                <span class="h2 font-weight-bold">รอ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6" *ngFor="let item of items;">
+            <div [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber}" class="row bg-primary text-white"
+              style="margin: 10px 5px 0px 5px; border-radius: 20px; border: 5px solid white; padding: 10px;">
+              <div class="col-md-6">
+                <span class="font-weight-bold" style="letter-spacing: 1px; font-size: 3rem;">
+                  {{ item.service_point_name || '-' }}
+                </span>
+              </div>
+              <div class="col-md-2" style="text-align: right;">
+                <span class="font-weight-bold" style="font-size: 3rem;">
+                  {{ item.room_number || '-' }}
+                </span>
+              </div>
+              <div class="col-md-3" style="text-align: right;">
+                <span class="font-weight-bold" style="font-size: 3rem;">
+                  {{ item.queue_number || '-' }}
+                </span>
+              </div>
+              <div class="col-md-1" style="text-align: right;">
+                <span class="font-weight-bold" style="font-size: 3rem;">
+                  {{ item.total | number }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
