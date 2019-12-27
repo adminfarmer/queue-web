@@ -220,7 +220,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     const _strQueue: any = _queue.split('');
     const _strRoom = strRoomNumber.split('');
 
-    // console.log(_strQueue);
+    console.log(_strQueue);
 
     const audioFiles = [];
 
@@ -228,7 +228,9 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     // audioFiles.push('./assets/audio/silent.mp3');
     if (this.speakSingle) {
       _strQueue.forEach(v => {
-        audioFiles.push(`./assets/audio/${v}.mp3`);
+        if (v != '-') {
+          audioFiles.push(`./assets/audio/${v}.mp3`);
+        }
       });
     } else {
       try {

@@ -183,7 +183,9 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
 
     if (this.speakSingle) {
       _strQueue.forEach(v => {
-        audioFiles.push(`./assets/audio/${v}.mp3`);
+        if (v != '-') {
+          audioFiles.push(`./assets/audio/${v}.mp3`);
+        }
       });
     } else {
       try {
