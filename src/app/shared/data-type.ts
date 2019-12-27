@@ -1,4 +1,4 @@
 enum UserType {
   ADMIN = 'ADMIN',
-  MEMBER = 'MEMBER',
+  MEMBER = 'MEMBER'
 }
