@@ -169,9 +169,14 @@ export class DisplayQueueDepartmentComponent implements OnInit, OnDestroy {
   playSound(strQueue: string, strRoomNumber: string, isInterview: string, roomId: any) {
 
     this.isPlayingSound = true;
+    let re = /-/gi;
+    let rx = / /gi;
+    let _queue = strQueue.toString().replace(rx, '');
+    _queue = _queue.toString().replace(re, '');
+    // _queue = _queue.toString().replace('-', '');
 
-    let _queue = strQueue.toString().replace(' ', '');
-    _queue = _queue.toString().replace('-', '');
+    // let _queue = strQueue.toString().replace(' ', '');
+    // _queue = _queue.toString().replace('-', '');
 
     const _strQueue: any = _queue.split('');
     const _strRoom = strRoomNumber.split('');
