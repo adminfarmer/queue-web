@@ -204,8 +204,8 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     }
     return value;
   }
-  playSound(strQueue: string, strRoomNumber: string, isInterview: string, roomId: any) {
 
+  playSound(strQueue: string, strRoomNumber: string, isInterview: string, roomId: any) {
     // console.log(this.servicePointSpeak);
     this.isPlayingSound = true;
     let re = /-/gi;
@@ -450,7 +450,14 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     this.client.on('message', (topic, payload) => {
       that.getCurrentQueue();
       // that.getWorkingHistory();
-      that.getWorkingRunNumber();
+      // that.getWorkingRunNumber();
+      if (this.useHisWaiting == 'Y') {
+        this.getWorkingRunNumber();
+      } else if (this.useHisWaiting == 'N') {
+        this.getWorkingHistory();
+      } else if (this.useHisWaiting == 'I') {
+        this.getWorkingInterview();
+      }
 
       try {
         const _payload = JSON.parse(payload.toString());
@@ -572,8 +579,10 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
     this.getCurrentQueue();
     if (this.useHisWaiting == 'Y') {
       this.getWorkingRunNumber();
-    } else {
+    } else if (this.useHisWaiting == 'N') {
       this.getWorkingHistory();
+    } else if (this.useHisWaiting == 'I') {
+      this.getWorkingInterview();
     }
   }
 
@@ -628,6 +637,22 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   async getWorkingRunNumber() {
     try {
       const rs: any = await this.queueService.getWorkingRunNumber(this.servicePointId, this.token);
+      console.log(rs);
+      if (rs.statusCode === 200) {
+        this.workingItemsHistory = rs.results;
+      } else {
+        console.log(rs.message);
+        this.alertService.error('เกิดข้อผิดพลาด');
+      }
+    } catch (error) {
+      console.log(error);
+      // this.alertService.error();
+    }
+  }
+
+  async getWorkingInterview() {
+    try {
+      const rs: any = await this.queueService.getWorkingInterview(this.servicePointId, this.token);
       console.log(rs);
       if (rs.statusCode === 200) {
         this.workingItemsHistory = rs.results;

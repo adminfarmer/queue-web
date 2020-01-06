@@ -68,8 +68,9 @@
 
       <div class="row">
         <div class="col-md-6" *ngFor="let item of workingItems; let idx = index;">
-          <div [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber,'bg-primary':item.queue_number!==currentQueueNumber}" class="row text-white"
-            style="margin: 20px 5px 0px 5px; border-radius: 20px;
+          <div
+            [ngClass]="{'invalid-blink': item.queue_number===currentQueueNumber,'bg-primary':item.queue_number!==currentQueueNumber}"
+            class="row text-white" style="margin: 20px 5px 0px 5px; border-radius: 20px;
               border: 5px solid white; padding: 20px;">
             <div class="col-md-9">
               <span class="font-weight-bold" style="letter-spacing: 1px; font-size: 10rem;">
@@ -95,7 +96,8 @@
               class="h2 text-muted float-right mdi mdi-bell-off"></i>
           </div>
           <div class="float-right">
-            <span class="h2 font-weight-bold" style="cursor: pointer" (click)="selectServicePoint()">{{servicePointName || 'กรุณาเลือกจุดบริการ'}}</span>
+            <span class="h2 font-weight-bold" style="cursor: pointer"
+              (click)="selectServicePoint()">{{servicePointName || 'กรุณาเลือกจุดบริการ'}}</span>
           </div>
         </div>
       </div>
@@ -166,14 +168,16 @@
             <div class="card">
               <div class="card-header h2" *ngIf="useHisWaiting == 'Y'">ประวัติรอการเรียก</div>
               <div class="card-header h2" *ngIf="useHisWaiting == 'N'">ประวัติเรียกคิว</div>
+              <div class="card-header h2" *ngIf="useHisWaiting == 'I'">ประวัติพักคิวรอเรียกใหม่</div>
               <div class="card-body" style="margin:0px;padding: 0px">
                 <table class="table table-sm table-striped">
                   <thead>
                     <tr>
                       <th><span class="h1">ลำดับที่</span></th>
                       <th style="text-align: right;">
-                        <span class="h1" *ngIf="useHisWaiting == 'Y'">HN</span>
+                        <span class="h1" *ngIf="useHisWaiting == 'Y' || 'I'">HN</span>
                         <span class="h1" *ngIf="useHisWaiting == 'N'">ช่องบริการ</span>
+                        <!-- <span class="h1" *ngIf="useHisWaiting == 'I'">HN</span> -->
                       </th>
                     </tr>
                   </thead>
@@ -188,7 +192,7 @@
                       </td>
                       <td style="text-align: right;">
                         <label style="font-size: 5rem;" class="font-weight-bold"
-                          *ngIf="useHisWaiting == 'Y'">{{item.hn}}</label>
+                          *ngIf="useHisWaiting == 'Y' || 'I'">{{item.hn}}</label>
                         <label style="font-size: 5rem;" class="font-weight-bold"
                           *ngIf="useHisWaiting == 'N'">{{item.room_id}}</label>
                       </td>

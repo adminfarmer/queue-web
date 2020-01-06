@@ -395,6 +395,8 @@ export class QueueService {
   }
 
   async getSoundListDepartment(departmentId: any, token: any = null) {
+    console.log(departmentId, 'xx1xx', token);
+
     const _url = `${this.apiUrl}/queue/sound/service-room-department?departmentId=${departmentId}`;
     var _httpOptions = {};
 
@@ -422,6 +424,25 @@ export class QueueService {
   async noCancel(queueId: any) {
     const _url = `${this.apiUrl}/queue/nocancel/${queueId}`;
     return this.httpClient.get(_url, this.httpOptions).toPromise();
+  }
+  //Ubonket10
+  async getWorkingInterview(servicePointId: any, token: any = null) {
+    const _url = `${this.apiUrl}/queue/working/interview/${servicePointId}`;
+
+    var _httpOptions: any = {};
+
+    if (token) {
+      _httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        })
+      };
+    } else {
+      _httpOptions = this.httpOptions;
+    }
+
+    return this.httpClient.get(_url, _httpOptions).toPromise();
   }
 
 }
