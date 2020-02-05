@@ -44,7 +44,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   roomId: any;
   queueId: any;
   hn: any; //Ubonket10
-  priorityId: any;
+  priorityId: any = 1;
 
   isInterview = false;
 

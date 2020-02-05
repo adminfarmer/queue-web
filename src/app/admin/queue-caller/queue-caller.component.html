@@ -535,7 +535,7 @@
               <div class="form-group col-md-4">
                 <label for="priorityId" class="required">ประเภทผู้รับบริการ</label>
                 <select class="form-control" name="priorityId" [(ngModel)]="priorityId">
-                  <option value="" selected>เลือก</option>
+                  <!-- <option value="" selected>เลือก</option> -->
                   <option *ngFor="let item of itemsPriority" [value]="item.priority_id">{{item.priority_name}}</option>
                 </select>
               </div>
