@@ -20,10 +20,11 @@ export class QueueService {
   }
 
   //Ubonket10
-  async visitOne(hn: any, servicePointId: any) {
+  async visitOne(hn: any, servicePointId: any, priorityId: any) {
     const _url = `${this.apiUrl}/queue/his-create`;
     return this.httpClient.post(_url, {
       hn: hn,
+      priorityId: priorityId,
       servicePointId: servicePointId
     }, this.httpOptions).toPromise();
   }

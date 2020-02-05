@@ -651,6 +651,7 @@ export class DisplayQueueComponent implements OnInit, OnDestroy {
   }
 
   async getWorkingInterview() {
+    console.log('xxxxxx');
     try {
       const rs: any = await this.queueService.getWorkingInterview(this.servicePointId, this.token);
       console.log(rs);

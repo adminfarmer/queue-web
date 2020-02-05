@@ -523,13 +523,21 @@
           <h3 class="card-title">เพิ่มคิวแผนก {{servicePointName || '-'}}</h3>
           <form>
             <div class="form-row">
-              <div class="form-group col-md-2">
+              <!-- <div class="form-group col-md-2">
                 <label for="hn" class="required">
                   <h3 class="card-title">รหัสผู่รับบริการ : </h3>
                 </label>
+              </div> -->
+              <div class="form-group col-md-4">
+                <label for="priorityId" class="required">รหัสผู่รับบริการ</label>
+                <input type="text" name="hn" id="hn" class="form-control" name="hn" [(ngModel)]="hn">
               </div>
               <div class="form-group col-md-4">
-                <input type="text" name="hn" id="hn" class="form-control" name="hn" [(ngModel)]="hn">
+                <label for="priorityId" class="required">ประเภทผู้รับบริการ</label>
+                <select class="form-control" name="priorityId" [(ngModel)]="priorityId">
+                  <option value="" selected>เลือก</option>
+                  <option *ngFor="let item of itemsPriority" [value]="item.priority_id">{{item.priority_name}}</option>
+                </select>
               </div>
               <div class="form-group col-md-2">
                 <button type="submit" class="btn btn-primary btn-sm" (click)="create_queue()">สร้างคิวแผนก</button>

@@ -9,6 +9,7 @@ import { QueueService } from 'src/app/shared/queue.service';
 import { AlertService } from 'src/app/shared/alert.service';
 import { ServiceRoomService } from 'src/app/shared/service-room.service';
 import { ServicePointService } from 'src/app/shared/service-point.service';
+import { PriorityService } from 'src/app/shared/priority.service';
 
 import { CountdownComponent } from 'ngx-countdown';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -25,6 +26,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   @ViewChild('mdlSelectTransfer') private mdlSelectTransfer: ModalSelectTransferComponent;
   @ViewChild('mdlSelectRoom') private mdlSelectRoom: ModalSelectRoomComponent;
 
+  itemsPriority: any = [];
   points: any = [];  //Ubonket10
   userId: any;
   message: string;
@@ -42,6 +44,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   roomId: any;
   queueId: any;
   hn: any; //Ubonket10
+  priorityId: any;
 
   isInterview = false;
 
@@ -82,6 +85,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
     private roomService: ServiceRoomService,
     private servicePointService: ServicePointService,
     private alertService: AlertService,
+    private priorityService: PriorityService,
     private zone: NgZone,
     @Inject('API_URL') private apiUrl: string,
   ) {
@@ -125,6 +129,8 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.getPriorityList();
+
     const _servicePoints = sessionStorage.getItem('servicePoints');
     const servicePoints = JSON.parse(_servicePoints);
     // console.log(this.servicePoints.length);
@@ -137,6 +143,25 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
 
     }
 
+  }
+
+  async getPriorityList() {
+    console.log("xxxxxx");
+
+    try {
+      const rs: any = await this.priorityService.list();
+      if (rs.statusCode === 200) {
+        this.itemsPriority = rs.results;
+        console.log(this.itemsPriority);
+
+      } else {
+        console.log(rs.message);
+        this.alertService.error('เกิดข้อผิดพลาด');
+      }
+    } catch (error) {
+      console.log(error);
+      this.alertService.error();
+    }
   }
 
   //Ubonket10
@@ -612,7 +637,7 @@ export class QueueCallerComponent implements OnInit, OnDestroy {
       if (this.servicePointId) {
 
         try {
-          const rs: any = await this.queueService.visitOne(this.hn, this.servicePointId);
+          const rs: any = await this.queueService.visitOne(this.hn, this.servicePointId, this.priorityId);
 
           if (rs.queueId) {
             this.alertService.success();
